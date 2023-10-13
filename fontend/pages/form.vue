@@ -4,12 +4,12 @@
         <input type="number" v-model="formData.amount" placeholder="Enter number" required >
         <label for="">
             <input type="radio" name="action" id="" value="0" @click="() => {
-                formData.income = 0
+                formData.actions = 0
             }"> income
         </label>
         <label for="">
             <input type="radio" name="action" id="" value="0" @click="() => {
-                formData.income = 1
+                formData.actions = 1
             }"> Outcome
         </label>
         <input type="text" v-model="formData.desceiption" placeholder="description" required>
@@ -24,9 +24,12 @@ import axios from 'axios'
 const formData = {
     amount : '',
     desceiption: '',
-    income : 0,
+    actions : 0,
     date: '2/10/2023'
 }
+
+const currentDate = new Date()
+// const 
 
 function createData(){
     fetch("http://localhost:3020/api/create", {
