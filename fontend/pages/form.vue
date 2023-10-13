@@ -2,13 +2,13 @@
   <div>
     <form>
         <input type="number" v-model="formData.amount" placeholder="Enter number" required >
-        <label for="">
-            <input type="radio" name="action" id="" value="0" @click="() => {
+        <label>
+            <input type="radio" name="action" @click="() => {
                 formData.actions = 0
             }"> income
         </label>
-        <label for="">
-            <input type="radio" name="action" id="" value="0" @click="() => {
+        <label>
+            <input type="radio" name="action" @click="() => {
                 formData.actions = 1
             }"> Outcome
         </label>
@@ -33,21 +33,21 @@ const currentDate = new Date()
 
 function createData(){
     fetch("http://localhost:3020/api/create", {
-          method: 'POST',
-          headers: {
-              'Content-Type' : 'application/json'
-          },
-          body: JSON.stringify({
-            "price": formData.amount,
-            "time": formData.date,
-            "actions": formData.income,
-            "description": formData.desceiption
-          })
+        method: 'POST',
+        headers: {
+            'Content-Type' : 'application/json'
+        },
+        body: JSON.stringify({
+          "price": formData.amount,
+          "time": formData.date,
+          "actions": formData.income,
+          "description": formData.desceiption
         })
-        .then((res) => res.json())
-        .catch((err) => {
-          console.log("Error",err);
-        });
+    })
+    .then((res) => res.json())
+    .catch((err) => {
+      console.log("Error",err);
+    });
 }
 
 
