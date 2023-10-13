@@ -1,5 +1,5 @@
 const { firestore } = require('../db');
-const Timestamp = new Date();
+const TimeRecord = new Date();
 const actionType = {
   income: 0,
   outcome: 1
@@ -12,7 +12,7 @@ const createData = async (price, actions, time, description) => {
       price,
       actions,
       time,
-      Timestamp
+      TimeRecord
     }); // Replace with your Firestore collection name
     const doc = await docRef.get();
     return {
@@ -27,7 +27,7 @@ const createData = async (price, actions, time, description) => {
       price,
       actions,
       time,
-      Timestamp
+      TimeRecord
     }); // Replace with your Firestore collection name
     const doc = await docRef.get();
     return {
