@@ -2,8 +2,8 @@ const userService = require("../service/userService.js");
 
 const createData = async (req, res) => {
   try {
-    const { price, actions, time } = req.body; // Assuming you send data in the request body
-    const newData = await userService.createData(price, actions, time);
+    const { price, actions, time,description } = req.body; // Assuming you send data in the request body
+    const newData = await userService.createData(price, actions, time,description);
     return res.status(200).json(newData);
   } catch (error) {
     console.error('Error creating data:', error);
