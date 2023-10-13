@@ -23,7 +23,7 @@ const createData = async (req, res) => {
 };
 
 const getAction = async (req, res) => {
-  const { action } = req.body;
+  const { action } = req.params;
 
   
   if (action == actionType.income) {
