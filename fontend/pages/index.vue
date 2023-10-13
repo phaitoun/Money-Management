@@ -30,6 +30,9 @@ export default {
         console.log(error);
       }
     },
+    async asyncData(){
+      
+    }
   },
 };
 </script>
