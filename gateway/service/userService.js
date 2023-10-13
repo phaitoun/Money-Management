@@ -16,7 +16,7 @@ const createData = async (price, actions, time,description) => {
     const doc = await docRef.get();
     return { id: doc.id,...doc.data() };
   }
-  if(action == actionType.outcome){
+  else if(action == actionType.outcome){
     const docRef = await firestore.collection('Money').add({
       description,
       price,
