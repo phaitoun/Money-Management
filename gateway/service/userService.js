@@ -1,9 +1,9 @@
 const { firestore } = require('../db');
 
 // Service to create a new document in Firestore
-const createData = async (price, actions, time) => {
+const createData = async (price, actions, time,description) => {
   const docRef = await firestore.collection('Money').add({
-    
+    description,
     price,
     actions,
     time
