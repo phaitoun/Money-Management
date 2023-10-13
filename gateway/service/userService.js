@@ -1,66 +1,87 @@
 const { firestore } = require('../db');
-
+const Timestamp = new Date();
 const actionType = {
-  income : 0,
-  outcome : 1
+  income: 0,
+  outcome: 1
 }
-// Service to create a new document in Firestore
-const createData = async (price, actions, time,description) => {
-  if(action == actionType.income){
+const createData = async (price, actions, time, description) => {
+
+  if (actions == actionType.income) {
     const docRef = await firestore.collection('Money').add({
       description,
       price,
       actions,
-      time
+      time,
+      Timestamp
     }); // Replace with your Firestore collection name
     const doc = await docRef.get();
-    return { id: doc.id,...doc.data() };
+    return {
+      id: doc.id,
+      ...doc.data()
+    };
   }
-  else if(action == actionType.outcome){
+  
+  else if (actions == actionType.outcome) {
     const docRef = await firestore.collection('Money').add({
       description,
       price,
       actions,
-      time
+      time,
+      Timestamp
     }); // Replace with your Firestore collection name
     const doc = await docRef.get();
-    return { id: doc.id,...doc.data() };
+    return {
+      id: doc.id,
+      ...doc.data()
+    };
   }
-  const docRef = await firestore.collection('Money').add({
-    description,
-    price,
-    actions,
-    time
-  }); // Replace with your Firestore collection name
+  
   const doc = await docRef.get();
-  return { id: doc.id,...doc.data() };
+  return {
+    id: doc.id,
+    ...doc.data()
+  };
 };
 
 
-const getallData = async() =>{
-  try{
+const getallDataByIncome = async () => {
+  try {
+
+
     const users = []
-    const snapshot = await firestore.collection('Money').get();
-          snapshot.forEach((doc)=>{
-            users.push({
-              id:doc.id, ...doc.data()
-            });
-          })
+    const incomeQuery = await firestore.collection('Money').where('actions', '==', actionType.income).get();
+
+    incomeQuery.forEach((doc) => {
+      users.push({
+        id: doc.id,
+        ...doc.data()
+      });
+    })
     return users;
-  }
-  catch{
+  } catch {
     return console.log("service error")
   }
 
 
 };
 
+const getallDataByOutcome = async () => {
+  const users = []
+  const outcomeQuery = await firestore.collection('Money').where('actions', '==', actionType.outcome).get();
 
+  outcomeQuery.forEach((doc) => {
+    users.push({
+      id: doc.id,
+      ...doc.data()
+    });
+  })
+  return users;
+}
 
 
 module.exports = {
   createData,
-  getallData,
-
+  getallDataByIncome,
+  getallDataByOutcome
 
 };
