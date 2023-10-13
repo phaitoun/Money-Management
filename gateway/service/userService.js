@@ -4,6 +4,7 @@ const actionType = {
   income: 0,
   outcome: 1
 }
+const users = []
 const createData = async (price, actions, time, description) => {
 
   if (actions == actionType.income) {

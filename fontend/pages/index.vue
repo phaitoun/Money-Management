@@ -25,21 +25,20 @@ export default {
   methods: {
     async getUsers() {
       try {
-        const response = await axios.get('http://localhost:3020/api/getAll', {params : 1
-        });
+        const response = await axios.get('http://localhost:3020/api/getAction/0');
         this.users = response.data;
       } catch (error) {
         console.log(error);
       }
     },
-    async checkActions() {
-      try {
-        const response = await axios.get('http://localhost:3020/api/getAll');
-        this.users = response.data.filter();
-      } catch (error) {
-        console.log(error);
-      }
-    },
+    // async checkActions() {
+    //   try {
+    //     const response = await axios.get('http://localhost:3020/api/getAll');
+    //     this.users = response.data.filter();
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // },
   },
   // mounted(){
   //   axios.get('http://localhost:3020/api/getAll')

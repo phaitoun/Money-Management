@@ -52,7 +52,7 @@ const getAction = async (req, res) => {
   
 };
 
-const getAll = async ()=>{
+const getAll = async (req, res)=>{
   try {
     const users = await userService.getadata();
     return res.status(200).json(users);
