@@ -1,3 +1,4 @@
+const { async } = require("@firebase/util");
 const userService = require("../service/userService.js");
 const actionType = {
   income: 0,
@@ -21,8 +22,8 @@ const createData = async (req, res) => {
   }
 };
 
-const getallData = async (req, res) => {
-  const { action } = req.body;
+const getAction = async (req, res) => {
+  const { action } = req.params;
 
   
   if (action == actionType.income) {
@@ -46,25 +47,25 @@ const getallData = async (req, res) => {
         error: "server error"
       });
     }
-  } else {
-    try {
-      const users = await userService.getadata();
-      return res.status(200).json(users);
-    } catch (error) {
-      console.log(error);
-      return res.status(500).send({
-        error: "server error"
-      });
-    }
-  }
+  } 
   
   
 };
 
-
+const getAll = async ()=>{
+  try {
+    const users = await userService.getadata();
+    return res.status(200).json(users);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
+      error: "server error"
+    });
+  }
+}
 
 module.exports = {
   createData,
-  getallData,
-
+  getAction,
+  getAll
 };
