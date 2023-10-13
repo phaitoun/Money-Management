@@ -4,8 +4,9 @@ const actionType = {
   income: 0,
   outcome: 1
 }
-const users = []
+
 const createData = async (price, actions, time, description) => {
+  const users = []
 
   if (actions == actionType.income) {
     const docRef = await firestore.collection('Money').add({
@@ -45,6 +46,8 @@ const createData = async (price, actions, time, description) => {
 
 
 const getallDataByIncome = async () => {
+const users = []
+
   try {
 
 
@@ -66,6 +69,7 @@ const getallDataByIncome = async () => {
 };
 
 const getallDataByOutcome = async () => {
+const users = []
   
   const outcomeQuery = await firestore.collection('Money').where('actions', '==', actionType.outcome).get();
 
@@ -78,6 +82,8 @@ const getallDataByOutcome = async () => {
   return users;
 }
 const getadata = async ()=>{
+const users = []
+  
   const QueryAll = await firestore.collection('Money').get();
 
   QueryAll.forEach((doc) => {

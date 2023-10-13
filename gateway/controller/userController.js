@@ -23,8 +23,7 @@ const createData = async (req, res) => {
 };
 
 const getAction = async (req, res) => {
-  const { action } = req.params;
-
+  const  action  = req.params.action;
   
   if (action == actionType.income) {
     try {
@@ -52,7 +51,7 @@ const getAction = async (req, res) => {
   
 };
 
-const getAll = async (req, res)=>{
+const getAll = async ()=>{
   try {
     const users = await userService.getadata();
     return res.status(200).json(users);
