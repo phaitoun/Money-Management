@@ -5,6 +5,7 @@
       <li v-for="user in users" :key="user.id">{{ user.price }}</li>
       <li v-for="user in users" :key="user.id">{{ user.time }}</li>
       <li v-for="user in users" :key="user.id">{{ user.actions }}</li>
+      <li v-for="user in users" :key="user.id">{{ user.description }}</li>
     </ul>
   </div>
 </template>
