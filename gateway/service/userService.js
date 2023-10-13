@@ -1,7 +1,31 @@
 const { firestore } = require('../db');
 
+const actionType = {
+  income : 0,
+  outcome : 1
+}
 // Service to create a new document in Firestore
 const createData = async (price, actions, time,description) => {
+  if(action == actionType.income){
+    const docRef = await firestore.collection('Money').add({
+      description,
+      price,
+      actions,
+      time
+    }); // Replace with your Firestore collection name
+    const doc = await docRef.get();
+    return { id: doc.id,...doc.data() };
+  }
+  if(action == actionType.outcome){
+    const docRef = await firestore.collection('Money').add({
+      description,
+      price,
+      actions,
+      time
+    }); // Replace with your Firestore collection name
+    const doc = await docRef.get();
+    return { id: doc.id,...doc.data() };
+  }
   const docRef = await firestore.collection('Money').add({
     description,
     price,
