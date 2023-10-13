@@ -4,9 +4,9 @@ const actionType = {
   income: 0,
   outcome: 1
 }
-// Service to create a new document in Firestore
-const createData = async (price, actions, time,description) => {
-  if(actions == actionType.income){
+const createData = async (price, actions, time, description) => {
+
+  if (actions == actionType.income) {
     const docRef = await firestore.collection('Money').add({
       description,
       price,
@@ -47,7 +47,7 @@ const getallDataByIncome = async () => {
   try {
 
 
-    const users = []
+    
     const incomeQuery = await firestore.collection('Money').where('actions', '==', actionType.income).get();
 
     incomeQuery.forEach((doc) => {
@@ -65,7 +65,7 @@ const getallDataByIncome = async () => {
 };
 
 const getallDataByOutcome = async () => {
-  const users = []
+  
   const outcomeQuery = await firestore.collection('Money').where('actions', '==', actionType.outcome).get();
 
   outcomeQuery.forEach((doc) => {
@@ -76,11 +76,22 @@ const getallDataByOutcome = async () => {
   })
   return users;
 }
+const getadata = async ()=>{
+  const QueryAll = await firestore.collection('Money').get();
 
+  QueryAll.forEach((doc) => {
+    users.push({
+      id: doc.id,
+      ...doc.data()
+    });
+  })
+  return users;
+}
 
 module.exports = {
   createData,
   getallDataByIncome,
-  getallDataByOutcome
+  getallDataByOutcome,
+  getadata
 
 };
