@@ -1,37 +1,35 @@
 <template>
   <div>
-    this is home page
-    <p >
-      {{userList.price}}
-      {{userList.action}}
-      {{userList.time}}
-    </p>
+    <!-- Display the received data -->
+    <ul>
+      <li v-for="user in users" :key="user.id">{{ user.price }}</li>
+      <li v-for="user in users" :key="user.id">{{ user.time }}</li>
+      <li v-for="user in users" :key="user.id">{{ user.actions }}</li>
+    </ul>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
+import axios from 'axios';
+
 export default {
-  data(){
-    return{
-      userList : []
-    }
+  data() {
+    return {
+      users: [],
+    };
   },
-  mounted() {
-    // Make an Axios GET request to fetch data from the API endpoint
-    axios
-      .get("http://localhost:3020/api/getAll")
-      .then((response) => {
-        this.userList = response.data;
-        console.log(userList);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
+  created() {
+    this.getUsers();
   },
-}
+  methods: {
+    async getUsers() {
+      try {
+        const response = await axios.get('http://localhost:3020/api/getAll');
+        this.users = response.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  },
+};
 </script>
-
-<style>
-
-</style>
