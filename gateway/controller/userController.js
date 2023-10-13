@@ -23,6 +23,8 @@ const createData = async (req, res) => {
 
 const getallData = async (req, res) => {
   const { action } = req.body;
+
+  
   if (action == actionType.income) {
     try {
       const users = await userService.getallDataByIncome(action);
@@ -44,7 +46,18 @@ const getallData = async (req, res) => {
         error: "server error"
       });
     }
+  } else {
+    try {
+      const users = await userService.getadata();
+      return res.status(200).json(users);
+    } catch (error) {
+      console.log(error);
+      return res.status(500).send({
+        error: "server error"
+      });
+    }
   }
+  
   
 };
 
