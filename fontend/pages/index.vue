@@ -31,9 +31,13 @@ export default {
         console.log(error);
       }
     },
-    async asyncData(){
-      
-    }
   },
+  // mounted(){
+  //   axios.get('http://localhost:3020/api/getAll')
+  //   .then(res => res.json())
+  //   .then(res => {
+  //     users = res
+  //   })
+  // }
 };
 </script>

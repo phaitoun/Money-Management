@@ -1,18 +1,17 @@
 <template>
   <div>
-    <form action="POST">
+    <form>
         <input type="number" v-model="formData.amount" placeholder="Enter number" required >
         <label for="">
-            <input type="radio" name="" id="" value="0" @click="() => {
+            <input type="radio" name="action" id="" value="0" @click="() => {
                 formData.income = 0
             }"> income
         </label>
         <label for="">
-            <input type="radio" name="" id="" value="0" @click="() => {
+            <input type="radio" name="action" id="" value="0" @click="() => {
                 formData.income = 1
             }"> Outcome
         </label>
-        <input type="radio" name="" id="" value="1">
         <input type="text" v-model="formData.desceiption" placeholder="description" required>
         <button type="submit" @click="createData()">Submit</button>     
     </form>
