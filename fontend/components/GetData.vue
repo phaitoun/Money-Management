@@ -10,8 +10,8 @@
     <div class="transaction-container d-flex align-items-center justify-content-center row">
       <div class="col-10" v-if="totalVisible">
         <div class="d-flex justify-content-between align-items-center mt-3 border-bottom border-top pb-3 pt-3">
-          <h2 >Transaction History</h2>
-          <button class="btn btn-success ps-5 pe-5 pt-2 pb-2">+</button>
+          <h2>Transaction History</h2>
+          <CreateData />
         </div>
         <div class="transaction-box p-2 pt-3">
           <div v-for="transaction in transactions" :key="transaction.id" class="transaction-list d-sm-flex justify-content-between align-items-center">
@@ -27,7 +27,7 @@
       <div class="col-10" v-if="transactionVisible">
         <div class="d-flex justify-content-between align-items-center mt-3 border-bottom border-top pb-3 pt-3">
           <h2 >{{ checkTitle }}</h2>
-          <button class="btn btn-success ps-5 pe-5 pt-2 pb-2">+</button>
+          <CreateData />
         </div>
         <div class="transaction-box p-2 pt-3">
           <div v-for="transaction in transactions" :key="transaction.id" class="transaction-list d-sm-flex justify-content-between align-items-center">
@@ -46,14 +46,18 @@
 
 <script>
 import axios from "axios";
+import CreateData from "./CreateData.vue";
 
 export default {
+  components: {
+    CreateData
+  },
   data() {
     return {
       transactions: [],
       transactionVisible : false,
       totalVisible : true,
-      checkTitle: ''
+      checkTitle: '',
     };
   },
   mounted() {
@@ -81,6 +85,9 @@ export default {
         console.log(error);
       }
     },
+    handleEvent(playload){
+      this.dialog = playload
+    }
   },
 };
 </script>
