@@ -1,8 +1,5 @@
 <template>
-  <div>
-    <header>
-        
-    </header>
+  <div class="container">
     <slot />
   </div>
 </template>
@@ -13,6 +10,13 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+  *{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+  }
+  .container{
+    max-width: 100%;
+  }
 </style>

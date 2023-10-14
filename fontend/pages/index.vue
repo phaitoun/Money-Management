@@ -1,5 +1,7 @@
 <template>
-  <GetData />
+  <div>
+    <GetData />
+  </div>
 </template>
 
 <script setup>
