@@ -15,7 +15,7 @@
         </div>
         <div class="transaction-box p-2 pt-3">
           <div v-for="transaction in transactions" :key="transaction.id" class="transaction-list d-sm-flex justify-content-between align-items-center">
-            <p>{{ transaction.description}}</p>
+            <p class="fw-bold">{{ transaction.description}}</p>
             <div class="money-box d-flex flex-column align-items-sm-end">
               <p v-if="(transaction.actions === 0)" class="plus text-sm-end"><span>+{{ transaction.price}}</span> Kip</p>
               <p v-else class="minus text-sm-end"><span>-{{ transaction.price}}</span> Kip</p>
@@ -31,7 +31,7 @@
         </div>
         <div class="transaction-box p-2 pt-3">
           <div v-for="transaction in transactions" :key="transaction.id" class="transaction-list d-sm-flex justify-content-between align-items-center">
-            <p>{{ transaction.description}}</p>
+            <p class="fw-bold">{{ transaction.description}}</p>
             <div class="money-box d-flex flex-column align-items-sm-end">
               <p v-if="(transaction.actions === 0)" class="plus text-sm-end"><span>+{{ transaction.price}}</span> Kip</p>
               <p v-else class="minus text-sm-end"><span>-{{ transaction.price}}</span> Kip</p>
