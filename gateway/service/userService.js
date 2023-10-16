@@ -95,11 +95,28 @@ const users = []
   })
   return users;
 }
+const deleteALL = async ()=>{
+  try{
+    const collectionRef = firestore.collection('Money');
+    const snapshot = await collectionRef.get();
+    const batch = firestore.batch();
+
+    snapshot.forEach((doc) => {
+      batch.delete(doc.ref);
+    });
+
+    await batch.commit();
+  }
+  catch{
+    console.log("service error cannot delete")
+  }
+}
 
 module.exports = {
   createData,
   getallDataByIncome,
   getallDataByOutcome,
-  getadata
+  getadata,
+  deleteALL
 
 };
