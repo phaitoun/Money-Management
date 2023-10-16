@@ -71,7 +71,7 @@ const deleteALL = async (req, res) => {
     const users = await userService.getdata()
     if (!users) {
     
-      return res.status(404).json({message : "data does not exits"})
+      return res.status(404).json({message : "don't have data to delete"})
     }
     await userService.deleteALL()
     return res.status(200).json({
