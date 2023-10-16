@@ -1,4 +1,6 @@
-const { firestore } = require('../db');
+const {
+  firestore
+} = require('../db');
 const TimeRecord = new Date();
 const actionType = {
   income: 0,
@@ -21,9 +23,7 @@ const createData = async (price, actions, time, description) => {
       id: doc.id,
       ...doc.data()
     };
-  }
-  
-  else if (actions == actionType.outcome) {
+  } else if (actions == actionType.outcome) {
     const docRef = await firestore.collection('Money').add({
       description,
       price,
@@ -37,7 +37,7 @@ const createData = async (price, actions, time, description) => {
       ...doc.data()
     };
   }
-  
+
   const doc = await docRef.get();
   return {
     id: doc.id,
@@ -47,12 +47,10 @@ const createData = async (price, actions, time, description) => {
 
 
 const getallDataByIncome = async () => {
-const users = []
+  const users = []
 
   try {
 
-
-    
     const incomeQuery = await firestore.collection('Money').where('actions', '==', actionType.income).get();
 
     incomeQuery.forEach((doc) => {
@@ -70,8 +68,8 @@ const users = []
 };
 
 const getallDataByOutcome = async () => {
-const users = []
-  
+  const users = []
+
   const outcomeQuery = await firestore.collection('Money').where('actions', '==', actionType.outcome).get();
 
   outcomeQuery.forEach((doc) => {
@@ -82,11 +80,13 @@ const users = []
   })
   return users;
 }
-const getadata = async ()=>{
-const users = []
-  
-  const QueryAll = await firestore.collection('Money').get();
+const getdata = async () => {
+  const users = []
 
+  const QueryAll = await firestore.collection('Money').get();
+  if(QueryAll.empty){
+    return null;
+  }
   QueryAll.forEach((doc) => {
     users.push({
       id: doc.id,
@@ -95,28 +95,35 @@ const users = []
   })
   return users;
 }
-const deleteALL = async ()=>{
-  try{
-    const collectionRef = firestore.collection('Money');
-    const snapshot = await collectionRef.get();
+const deleteALL = async () => {
+  try {
+    const usersRef = firestore.collection('Money');
+    const snapshot = await usersRef.get();
+
+    if (snapshot.empty) {
+      return null; // No users found
+    }
+
+    // Delete all user documents
     const batch = firestore.batch();
-
-    snapshot.forEach((doc) => {
-      batch.delete(doc.ref);
-    });
-
+    snapshot.docs.forEach((doc) => batch.delete(doc.ref));
     await batch.commit();
+
+    // Return a success message or any other desired response
+    return {
+      message: 'All users deleted successfully'
+    };
+  } catch (error) {
+    console.error(error);
+    throw error;
   }
-  catch{
-    console.log("service error cannot delete")
-  }
-}
+};
 
 module.exports = {
   createData,
   getallDataByIncome,
   getallDataByOutcome,
-  getadata,
+  getdata,
   deleteALL
 
 };
