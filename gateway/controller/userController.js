@@ -54,8 +54,8 @@ const getAction = async (req, res) => {
 
 const getAll = async (req, res) => {
   try {
-    const users = await userService.getadata();
-    if(users.empty){
+    const users = await userService.getdata();
+    if(!users){
       return res.status(404).json({message : "user does not exits"})
     }
     return res.status(200).json(users);
@@ -68,16 +68,17 @@ const getAll = async (req, res) => {
 }
 const deleteALL = async (req, res) => {
   try {
-    const users = await userService.getadata()
-    if (users !== null) {
-      await userService.deleteALL()
-      return res.status(200).json({
-        message: "all document delete successfully"
-      })
+    const users = await userService.getdata()
+    if (!users) {
+    
+      return res.status(404).json({message : "don't have data to delete"})
     }
-    return res.status(404).json({message : "data does not exits"})
+    await userService.deleteALL()
+    return res.status(200).json({
+      message: "all document delete successfully"
+    })
 
-  } catch {
+  }  catch (error) {
     console.log(error);
     return res.status(500).send({
       error: "controller error"
