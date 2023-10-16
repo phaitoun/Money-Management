@@ -1,4 +1,6 @@
-const { async } = require("@firebase/util");
+const {
+  async
+} = require("@firebase/util");
 const userService = require("../service/userService.js");
 const actionType = {
   income: 0,
@@ -23,8 +25,8 @@ const createData = async (req, res) => {
 };
 
 const getAction = async (req, res) => {
-  const  action  = req.params.action;
-  
+  const action = req.params.action;
+
   if (action == actionType.income) {
     try {
       const users = await userService.getallDataByIncome(action);
@@ -35,8 +37,7 @@ const getAction = async (req, res) => {
         error: "server error"
       });
     }
-  } 
-  else if (action == actionType.outcome){
+  } else if (action == actionType.outcome) {
     try {
       const users = await userService.getallDataByOutcome(action);
       return res.status(200).json(users);
@@ -46,25 +47,46 @@ const getAction = async (req, res) => {
         error: "server error"
       });
     }
-  } 
-  
-  
+  }
+
+
 };
 
-const getAll = async (req,res)=>{
+const getAll = async (req, res) => {
   try {
     const users = await userService.getadata();
+    if(users.empty){
+      return res.status(404).json({message : "user does not exits"})
+    }
     return res.status(200).json(users);
   } catch (error) {
     console.log(error);
     return res.status(500).send({
-      error: "server error"
+      error: "controller error"
     });
   }
 }
+const deleteALL = async (req, res) => {
+  try {
+    const users = await userService.getadata()
+    if (users !== null) {
+      await userService.deleteALL()
+      return res.status(200).json({
+        message: "all document delete successfully"
+      })
+    }
+    return res.status(404).json({message : "data does not exits"})
 
+  } catch {
+    console.log(error);
+    return res.status(500).send({
+      error: "controller error"
+    });
+  }
+}
 module.exports = {
   createData,
   getAction,
-  getAll
+  getAll,
+  deleteALL
 };
