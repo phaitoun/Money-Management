@@ -7,6 +7,9 @@
         <li class="action-item col-4 list-group-item d-flex align-items-center justify-content-center" @click="getUsers()">All</li>
       </ul>
     </div>
+    <div class="pie-chart d-flex align-items-center justify-content-center">
+        <PieChart />
+    </div>
     <div class="transaction-container d-flex align-items-center justify-content-center row">
       <div class="col-10" v-if="totalVisible">
         <div class="d-flex justify-content-between align-items-center mt-3 border-bottom border-top pb-3 pt-3">
@@ -46,12 +49,8 @@
 
 <script>
 import axios from "axios";
-import CreateData from "./CreateData.vue";
 
 export default {
-  components: {
-    CreateData
-  },
   data() {
     return {
       transactions: [],
