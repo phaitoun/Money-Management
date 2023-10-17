@@ -82,6 +82,7 @@ function handleSubmit() {
   })
     .then((res) => res.json())
     .then(() => {
+      console.log("success");
       alert('Create successfully')
       location.reload()
     })
