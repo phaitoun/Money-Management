@@ -53,6 +53,16 @@ let hours = date.getHours()
 let minute = date.getMinutes()
 let currentDate = `${day}/${month}/${year} ${hours}:${minute}`;
 
+if(hours > 10){
+  currentDate = `${day}/${month}/${year} 0${hours}:${minute}`
+} 
+else if(minute > 10){
+  currentDate = `${day}/${month}/${year} ${hours}:0${minute}`
+}
+else if(minute > 10 && hours > 10){
+  currentDate = `${day}/${month}/${year} 0${hours}:0${minute}`
+}
+
 const errors = reactive({
   amount: '',
   description: ''

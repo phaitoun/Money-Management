@@ -8,7 +8,7 @@
       </ul>
     </div>
     <div class="pie-chart d-flex align-items-center justify-content-center">
-        <PieChart />
+        <PieChart :income="incomePercent" :expense="expensePercent"/>
     </div>
     <div class="transaction-container d-flex align-items-center justify-content-center row">
       <div class="col-10" v-if="totalVisible">
@@ -49,30 +49,51 @@
 
 <script>
 import axios from "axios";
+import TestChart from "./PieChart.vue";
 
 export default {
+  components: {
+    TestChart
+  },
   data() {
     return {
       transactions: [],
       transactionVisible : false,
       totalVisible : true,
       checkTitle: '',
+      total: [],
+      incomePercent: 0,
+      expensePercent: 0
     };
   },
   mounted() {
     this.getUsers();
   },
   methods: {
+
+    // Get all data
     async getUsers() {
       this.totalVisible = true
       this.transactionVisible = false
       try {
         const response = await axios.get("http://localhost:3020/api/getAll");
         this.transactions = response.data;
+        this.total = this.transactions.reduce((accumulator, currentValue) => {
+            if (currentValue.actions === 0) {
+                accumulator.income += currentValue.price;
+            } else {
+                accumulator.expense += currentValue.price;
+            }
+            return accumulator;
+        }, { income: 0, expense: 0 });
+        this.incomePercent = ((this.total.income / (this.total.expense + this.total.income)) * 100).toFixed(2)
+        this.expensePercent = ((this.total.expense / (this.total.expense + this.total.income)) * 100).toFixed(2)
       } catch (error) {
         console.log(error);
       } 
     },
+
+    // Get Income and Expense data
     async checkActions(action, title) {
       this.totalVisible = false
       this.transactionVisible =  true
@@ -129,5 +150,8 @@ export default {
   .date{
     width: 130px;
     font-size: 12px;
+  }
+  ::-webkit-scrollbar {
+    display: none;
   }
 </style>
