@@ -5,8 +5,7 @@ const actionType = {
   income: 0,// in
   outcome: 1 // out
 }
-let currentIdIncome = 0;
-let currentIoutcome = 0;
+let currentId = 0;
 
 
 
@@ -15,14 +14,14 @@ const createData = async (price, actions, time, description) => {
 
   if (actions == actionType.income)
   {
-    currentIdIncome++
+    currentId++
     const docRef = await firestore.collection('Money').add({
       description,
       price,
       actions,
       time,
       TimeRecord,
-      id: currentIdIncome
+      id: currentId
       
     }); // Replace with your Firestore collection name
     const doc = await docRef.get();
@@ -30,14 +29,18 @@ const createData = async (price, actions, time, description) => {
       id: doc.id,
       ...doc.data()
     };
-  } else if (actions == actionType.outcome) {
+  }
+  else if (actions == actionType.outcome)
+  {
+    currentId++
+
     const docRef = await firestore.collection('Money').add({
       description,
       price,
       actions,
       time,
       TimeRecord,
-      id: currentIoutcome
+      id: currentId
     }); // Replace with your Firestore collection name
     const doc = await docRef.get();
     return {
