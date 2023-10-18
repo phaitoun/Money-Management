@@ -53,16 +53,6 @@ let hours = date.getHours()
 let minute = date.getMinutes()
 let currentDate = `${day}/${month}/${year} ${hours}:${minute}`;
 
-if(hours > 10){
-  currentDate = `${day}/${month}/${year} 0${hours}:${minute}`
-} 
-else if(minute > 10){
-  currentDate = `${day}/${month}/${year} ${hours}:0${minute}`
-}
-else if(minute > 10 && hours > 10){
-  currentDate = `${day}/${month}/${year} 0${hours}:0${minute}`
-}
-
 const errors = reactive({
   amount: '',
   description: ''
@@ -102,6 +92,7 @@ function handleSubmit() {
 }
 
 watch(formData, (newValue, oldValue) => {
+  // Validation amount
   if (!newValue.amount) {
     errors.amount = 'Amount is required'
   } else if (isNaN(newValue.amount)) {
@@ -109,11 +100,22 @@ watch(formData, (newValue, oldValue) => {
   } else {
     errors.amount = ''
   }
-
+  // Validation description
   if (!newValue.description) {
     errors.description = 'Description is required'
   } else {
     errors.description = ''
+  }
+
+  // Check date
+  if(hours < 10){
+  currentDate = `${day}/${month}/${year} 0${hours}:${minute}`
+  } 
+  else if(minute < 10){
+    currentDate = `${day}/${month}/${year} ${hours}:0${minute}`
+  }
+  else if(minute < 10 && hours < 10){
+    currentDate = `${day}/${month}/${year} 0${hours}:0${minute}`
   }
 })
 </script>

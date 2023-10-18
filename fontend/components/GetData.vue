@@ -43,6 +43,7 @@
           </div>
         </div>
       </div>
+      <DeleteData class="col-10"/>
     </div>
 </div>
 </template>
