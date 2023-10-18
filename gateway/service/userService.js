@@ -3,12 +3,14 @@ const {
 } = require('../db');
 const TimeRecord = new Date();
 const actionType = {
-  income: 0,
-  outcome: 1
+  income: 0,// in
+  outcome: 1 // out
 }
-
+let currentId = 0;
 const createData = async (price, actions, time, description) => {
   const users = []
+  const collectionRef = firestore.collection('Money');
+  const newDocRef = collectionRef.doc();
 
   if (actions == actionType.income) {
     const docRef = await firestore.collection('Money').add({
@@ -16,8 +18,11 @@ const createData = async (price, actions, time, description) => {
       price,
       actions,
       time,
-      TimeRecord
+      TimeRecord,
+      id: currentId
+      
     }); // Replace with your Firestore collection name
+    currentId++
     const doc = await docRef.get();
     return {
       id: doc.id,
@@ -99,6 +104,7 @@ const getdata = async () => {
 }
 const deleteALL = async () => {
   try {
+    currentId = 0
     const usersRef = firestore.collection('Money');
     const snapshot = await usersRef.get();
 
