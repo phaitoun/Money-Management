@@ -19,7 +19,7 @@ const createData = async (req, res) => {
   } catch (error) {
     console.error('Error creating data:', error);
     return res.status(500).json({
-      error: 'Internal server error'
+      message : error.message
     });
   }
 };
