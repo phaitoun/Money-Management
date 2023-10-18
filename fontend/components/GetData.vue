@@ -17,7 +17,7 @@
           <CreateData />
         </div>
         <div class="transaction-box p-2 pt-3">
-          <div v-for="transaction in transactions" :key="transaction.id" class="transaction-list d-sm-flex justify-content-between align-items-center">
+          <div v-for="transaction in sortedData" :key="transaction.id" class="transaction-list d-sm-flex justify-content-between align-items-center">
             <p class="fw-bold">{{ transaction.description}}</p>
             <div class="money-box d-flex flex-column align-items-sm-end">
               <p v-if="(transaction.actions === 0)" class="plus text-sm-end"><span>+{{ transaction.price}}</span> Kip</p>
@@ -33,7 +33,7 @@
           <CreateData />
         </div>
         <div class="transaction-box p-2 pt-3">
-          <div v-for="transaction in transactions" :key="transaction.id" class="transaction-list d-sm-flex justify-content-between align-items-center">
+          <div v-for="transaction in sortedData" :key="transaction.id" class="transaction-list d-sm-flex justify-content-between align-items-center">
             <p class="fw-bold">{{ transaction.description}}</p>
             <div class="money-box d-flex flex-column align-items-sm-end">
               <p v-if="(transaction.actions === 0)" class="plus text-sm-end"><span>+{{ transaction.price}}</span> Kip</p>
@@ -79,6 +79,7 @@ export default {
       try {
         const response = await axios.get("http://localhost:3020/api/getAll");
         this.transactions = response.data;
+        console.log(this.transactions);
         this.total = this.transactions.reduce((accumulator, currentValue) => {
             if (currentValue.actions === 0) {
                 accumulator.income += currentValue.price;
@@ -87,8 +88,8 @@ export default {
             }
             return accumulator;
         }, { income: 0, expense: 0 });
-        this.incomePercent = ((this.total.income / (this.total.expense + this.total.income)) * 100).toFixed(2)
-        this.expensePercent = ((this.total.expense / (this.total.expense + this.total.income)) * 100).toFixed(2)
+        this.incomePercent = parseFloat(((this.total.income / (this.total.expense + this.total.income)) * 100).toFixed(2))
+        this.expensePercent = parseFloat(((this.total.expense / (this.total.expense + this.total.income)) * 100).toFixed(2))
       } catch (error) {
         console.log(error);
       } 
@@ -110,6 +111,11 @@ export default {
       this.dialog = playload
     }
   },
+  computed: {
+    sortedData(){
+      return this.transactions.sort((a, b) => b.id - a.id)
+    }
+  }
 };
 </script>
 

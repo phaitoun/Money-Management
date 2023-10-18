@@ -48,8 +48,8 @@ function deleteAllData(){
      method: "DELETE"
     })
     .then(res => res.json())
-    .then(() => {
-        alert("Delete success")
+    .then((res) => {
+        alert(res.message)
         location.reload()
     })
     .catch((err) => {
