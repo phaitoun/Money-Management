@@ -1,42 +1,43 @@
-const {
-  firestore
-} = require('../db');
+const {  firestore } = require('../db');
 const TimeRecord = new Date();
+
 const actionType = {
   income: 0,// in
   outcome: 1 // out
 }
-let currentId = 0;
+let currentIdIncome = 0;
+let currentIoutcome = 0;
+
+
+
 const createData = async (price, actions, time, description) => {
   const users = []
-  const collectionRef = firestore.collection('Money');
-  const newDocRef = collectionRef.doc();
 
-  if (actions == actionType.income) {
+  if (actions == actionType.income)
+  {
+    currentIdIncome++
     const docRef = await firestore.collection('Money').add({
       description,
       price,
       actions,
       time,
       TimeRecord,
-      id: currentId
+      id: currentIdIncome
       
     }); // Replace with your Firestore collection name
-    currentId++
     const doc = await docRef.get();
     return {
       id: doc.id,
       ...doc.data()
     };
-  }
-  
-  else if (actions == actionType.outcome) {
+  } else if (actions == actionType.outcome) {
     const docRef = await firestore.collection('Money').add({
       description,
       price,
       actions,
       time,
-      TimeRecord
+      TimeRecord,
+      id: currentIoutcome
     }); // Replace with your Firestore collection name
     const doc = await docRef.get();
     return {
@@ -89,8 +90,8 @@ const getallDataByOutcome = async () => {
 }
 const getdata = async () => {
   const users = []
-
-  const QueryAll = await firestore.collection('Money').get();
+ 
+  const QueryAll = (await firestore.collection('Money').get());
   if(QueryAll.empty){
     return null;
   }
