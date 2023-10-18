@@ -75,7 +75,7 @@ const deleteALL = async (req, res) => {
     }
     await userService.deleteALL()
     return res.status(200).json({
-      message: "all document delete successfully"
+      message: "All document delete successfully"
     })
 
   }  catch (error) {
