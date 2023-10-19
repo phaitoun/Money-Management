@@ -18,11 +18,11 @@
         </div>
         <div class="transaction-box p-2 pt-3">
           <div v-for="transaction in sortedData" :key="transaction.id" class="transaction-list d-sm-flex justify-content-between align-items-center">
-            <p class="fw-bold">{{ transaction.description}}</p>
+            <p class="fw-bold title">{{ transaction.description}}</p>
             <div class="money-box d-flex flex-column align-items-sm-end">
               <p v-if="(transaction.actions === 0)" class="plus text-sm-end"><span>+{{ transaction.price}}</span> Kip</p>
               <p v-else class="minus text-sm-end"><span>-{{ transaction.price}}</span> Kip</p>
-              <p class="date">Date: {{ transaction.time }}</p>
+              <p class="date text-start text-sm-end">Date: {{ transaction.time }}</p>
             </div>
           </div>
         </div>
@@ -38,12 +38,12 @@
             <div class="money-box d-flex flex-column align-items-sm-end">
               <p v-if="(transaction.actions === 0)" class="plus text-sm-end"><span>+{{ transaction.price}}</span> Kip</p>
               <p v-else class="minus text-sm-end"><span>-{{ transaction.price}}</span> Kip</p>
-              <p class="date">Date: {{ transaction.time }}</p>
+              <p class="date text-start text-sm-end">Date: {{ transaction.time }}</p>
             </div>
           </div>
         </div>
       </div>
-      <DeleteData class="col-10"/>
+      <DeleteData />
     </div>
 </div>
 </template>
@@ -124,6 +124,8 @@ export default {
     box-sizing: border-box;
     padding: 0;
     margin: 0;
+    font-family: 'Noto Sans Lao', sans-serif;
+    font-family: 'Noto Sans Lao Looped', sans-serif;
   }
   .action-item{
     padding: 20px 0;
@@ -155,7 +157,7 @@ export default {
     width: 150px;
   }
   .date{
-    width: 130px;
+    width: 140px;
     font-size: 12px;
   }
   ::-webkit-scrollbar {
