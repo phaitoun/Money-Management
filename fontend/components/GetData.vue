@@ -7,14 +7,16 @@
         <li class="action-item col-4 list-group-item d-flex align-items-center justify-content-center" @click="getUsers()">All</li>
       </ul>
     </div>
-    <div class="pie-chart d-flex align-items-center justify-content-center">
+    <div class="pie-chart d-flex flex-column flex-sm-row align-items-center justify-content-center">
         <PieChart :income="incomePercent" :expense="expensePercent"/>
+        <img src="../assets/img/meme-no-money.png" v-if="incomePercent < expensePercent">
+        <img src="../assets/img/meme-have-money.png" v-if="incomePercent > expensePercent">
     </div>
     <div class="transaction-container d-flex align-items-center justify-content-center row">
       <div class="col-10" v-if="totalVisible">
         <div class="d-flex justify-content-between align-items-center mt-3 border-bottom border-top pb-3 pt-3">
-          <h2>Transaction History</h2>
-          <CreateData />
+          <h2 class="ps-5">Transaction History</h2>
+          <CreateData class="pe-5"/>
         </div>
         <div class="transaction-box p-2 pt-3">
           <div v-for="transaction in sortedData" :key="transaction.id" class="transaction-list d-sm-flex justify-content-between align-items-center">
@@ -50,12 +52,8 @@
 
 <script>
 import axios from "axios";
-import TestChart from "./PieChart.vue";
 
 export default {
-  components: {
-    TestChart
-  },
   data() {
     return {
       transactions: [],
@@ -80,19 +78,23 @@ export default {
         const response = await axios.get("http://localhost:3020/api/getAll");
         this.transactions = response.data;
         console.log(this.transactions);
-        this.total = this.transactions.reduce((accumulator, currentValue) => {
-            if (currentValue.actions === 0) {
-                accumulator.income += currentValue.price;
-            } else {
-                accumulator.expense += currentValue.price;
-            }
-            return accumulator;
-        }, { income: 0, expense: 0 });
-        this.incomePercent = parseFloat(((this.total.income / (this.total.expense + this.total.income)) * 100).toFixed(2))
-        this.expensePercent = parseFloat(((this.total.expense / (this.total.expense + this.total.income)) * 100).toFixed(2))
+        this.sumMoney(this.transactions)
       } catch (error) {
         console.log(error);
       } 
+    },
+
+    sumMoney(transaction){
+      this.total = transaction.reduce((accumulator, currentValue) => {
+        if (currentValue.actions === 0) {
+            accumulator.income += currentValue.price;
+        } else {
+            accumulator.expense += currentValue.price;
+        }
+        return accumulator;
+      }, { income: 0, expense: 0 });
+      this.incomePercent = parseFloat(((this.total.income / (this.total.expense + this.total.income)) * 100).toFixed(2))
+      this.expensePercent = parseFloat(((this.total.expense / (this.total.expense + this.total.income)) * 100).toFixed(2))
     },
 
     // Get Income and Expense data
@@ -162,5 +164,8 @@ export default {
   }
   ::-webkit-scrollbar {
     display: none;
+  }
+  img{
+    max-width: 250px;
   }
 </style>
