@@ -52,12 +52,8 @@
 
 <script>
 import axios from "axios";
-import TestChart from "./PieChart.vue";
 
 export default {
-  components: {
-    TestChart
-  },
   data() {
     return {
       transactions: [],
@@ -82,19 +78,23 @@ export default {
         const response = await axios.get("http://localhost:3020/api/getAll");
         this.transactions = response.data;
         console.log(this.transactions);
-        this.total = this.transactions.reduce((accumulator, currentValue) => {
-            if (currentValue.actions === 0) {
-                accumulator.income += currentValue.price;
-            } else {
-                accumulator.expense += currentValue.price;
-            }
-            return accumulator;
-        }, { income: 0, expense: 0 });
-        this.incomePercent = parseFloat(((this.total.income / (this.total.expense + this.total.income)) * 100).toFixed(2))
-        this.expensePercent = parseFloat(((this.total.expense / (this.total.expense + this.total.income)) * 100).toFixed(2))
+        this.sumMoney(this.transactions)
       } catch (error) {
         console.log(error);
       } 
+    },
+
+    sumMoney(transaction){
+      this.total = transaction.reduce((accumulator, currentValue) => {
+        if (currentValue.actions === 0) {
+            accumulator.income += currentValue.price;
+        } else {
+            accumulator.expense += currentValue.price;
+        }
+        return accumulator;
+      }, { income: 0, expense: 0 });
+      this.incomePercent = parseFloat(((this.total.income / (this.total.expense + this.total.income)) * 100).toFixed(2))
+      this.expensePercent = parseFloat(((this.total.expense / (this.total.expense + this.total.income)) * 100).toFixed(2))
     },
 
     // Get Income and Expense data
