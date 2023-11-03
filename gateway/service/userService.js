@@ -1,4 +1,4 @@
-const {  firestore } = require('../db');
+const { firestore } = require('../db');
 const TimeRecord = new Date();
 
 const actionType = {
@@ -6,7 +6,6 @@ const actionType = {
   outcome: 1 // out
 }
 let currentId = 0;
-
 
 
 const createData = async (price, actions, time, description) => {
@@ -33,7 +32,6 @@ const createData = async (price, actions, time, description) => {
   else if (actions == actionType.outcome)
   {
     currentId++
-
     const docRef = await firestore.collection('Money').add({
       description,
       price,
