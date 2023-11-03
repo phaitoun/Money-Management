@@ -26,7 +26,7 @@
             </div>
           </div>
           <button type="submit" class="btn btn-primary text-light me-1">Submit</button>
-          <button type="button" class="btn btn-secondary" @click="dialog = false">Cancel</button>
+          <button type="button" class="btn btn-secondary text-light" @click="dialog = false">Cancel</button>
         </form>
       </div>
     </v-dialog>
